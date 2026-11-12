@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Emotionen-Wegweiser · Mäuse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#faf8f4; --card:#ffffff; --ink:#2b2a28; --muted:#7a766f; --line:#ebe6dd;
+  --chip-s:45%; --chip-l:94%; --mark-l:80%; --mark-ink:#2b2a28; --dot-l:55%;
+  --serif:'Fredoka',ui-rounded,'Trebuchet MS',sans-serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1a18; --card:#242321; --ink:#ece8e1; --muted:#9b968d; --line:#35332f;
+    --chip-s:25%; --chip-l:25%; --mark-l:38%; --mark-ink:#fff; --dot-l:65%;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1a18; --card:#242321; --ink:#ece8e1; --muted:#9b968d; --line:#35332f;
+  --chip-s:25%; --chip-l:25%; --mark-l:38%; --mark-ink:#fff; --dot-l:65%;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-text-size-adjust:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 18px 56px}
+header{margin-bottom:28px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:600 clamp(30px,6vw,44px)/1.1 var(--serif);margin:6px 0 10px;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:620px;margin:0}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:22px 0 0;font-size:13px;color:var(--muted)}
+.bar b{color:var(--ink);font-weight:600}
+.bar button{font:inherit;color:var(--muted);background:none;border:1px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
+.legend{display:flex;gap:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dots{display:inline-flex;gap:3px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--muted)}
+h2{font:600 22px/1.25 var(--serif);margin:48px 0 6px}
+.sub{color:var(--muted);margin:0 0 18px;max-width:620px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 8px}
+.card h3{display:flex;align-items:center;gap:10px;font:600 16px/1.3 var(--sans);margin:0 0 12px}
+.card h3 .sw{width:10px;height:10px;border-radius:50%;background:hsl(var(--h) 55% var(--dot-l));flex:none}
+.lvl{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.lvl .dots{flex:none;margin-top:8px;width:30px}
+.lvl .dots i.on{background:hsl(var(--h) 50% var(--dot-l))}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13.5px;color:var(--ink);background:hsl(var(--h) var(--chip-s) var(--chip-l));border:1px solid transparent;border-radius:99px;padding:3px 11px;cursor:pointer;transition:background .15s}
+.chip.mk{background:hsl(var(--h) 55% var(--mark-l));color:var(--mark-ink);font-weight:500;border-color:hsl(var(--h) 45% 55%)}
+.chip:focus-visible,.bar button:focus-visible{outline:2px solid hsl(var(--h,210) 60% 50%);outline-offset:2px}
+.hidden .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 15px}
+.hidden .item b{display:block;font-weight:600}
+.hidden .item span{color:var(--muted);font-size:14px}
+.hidden .grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;counter-reset:s}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font-weight:600;font-size:13px;margin-bottom:10px}
+.step b{display:block;font-weight:600;margin-bottom:4px}
+.step span{color:var(--muted);font-size:13.5px}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.lev{border-radius:16px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-top:3px solid hsl(var(--h) 50% var(--dot-l))}
+.lev small{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lev b{display:block;font-weight:500;margin-top:4px}
+.note{margin-top:48px;padding:22px 24px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.note p{margin:0 0 8px;max-width:680px}
+.note p:last-child{margin:0;color:var(--muted);font-size:14px}
+.sum{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:720px){.sum{grid-template-columns:1fr}}
+.sum .empty{grid-column:1/-1;margin:0;padding:22px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);text-align:center}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.pane h3{font:600 12px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.grp{margin-bottom:16px}.grp:last-child{margin-bottom:0}
+.grp-h{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;margin-bottom:8px}
+.grp-h .b2{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden;min-width:30px}
+.grp-h .b2 i{display:block;height:100%;border-radius:99px;background:hsl(var(--h) 50% var(--dot-l))}
+.grp-h em{font-style:normal;color:var(--muted);font-weight:500}
+.chip.ro{cursor:default;background:hsl(var(--h) 55% var(--mark-l));color:var(--mark-ink);font-weight:500}
+.seg{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--line);margin:4px 0 8px}
+.seg i{display:block;height:100%}
+.segl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:16px}
+.txt p{margin:0 0 8px}
+.txt .fine{color:var(--muted);font-size:12.5px;margin-top:12px}
+
+:root{--tint-l:96.5%;--bord-l:80%}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tint-l:18.5%;--bord-l:36%}}
+:root[data-theme="dark"]{--tint-l:18.5%;--bord-l:36%}
+header{position:relative}
+.hero{position:absolute;top:-4px;right:0;display:flex;align-items:flex-end}
+@media(max-width:560px){.hero{position:static;margin-bottom:6px}}
+.card{background:hsl(var(--h) 55% var(--tint-l));border:1.5px dashed hsl(var(--h) 45% var(--bord-l));border-radius:20px}
+.card h3{font-family:var(--serif);font-size:17px}
+.card h3 .mo{margin-left:auto;line-height:0;margin-top:-6px;margin-bottom:-6px}
+.lvl{border-top:1.5px dotted hsl(var(--h) 40% var(--bord-l))}
+.hidden .item{display:flex;gap:10px;align-items:center;border:1.5px dashed hsl(var(--h) 45% var(--bord-l));background:hsl(var(--h) 55% var(--tint-l));border-radius:16px}
+.hidden .item svg{flex:none}
+.pane{border:1.5px dashed var(--line);border-radius:20px}
+.mm{text-align:center;line-height:0;margin:-4px 0 8px}
+.sum .empty{border-radius:20px;line-height:1.5}
+.trail{display:flex;align-items:center;justify-content:space-between;margin-top:44px}
+.trail .p{line-height:0}.trail .p svg{transform:rotate(90deg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="hero" id="hero"></div>
+  <div class="eyebrow">Selbstwahrnehmung</div>
+  <h1>Emotionen-Wegweiser</h1>
+  <p class="lead">Eine Übersicht zum Erkennen und Benennen eigener Gefühle. Die Abstufungen sind Orientierung – Gefühle verlaufen nicht bei allen gleich und lassen sich nicht immer einer Kategorie zuordnen.</p>
+  <div class="bar">
+    <span class="legend">
+      <span><span class="dots"><i class="on"></i><i></i><i></i></span>leicht</span>
+      <span><span class="dots"><i class="on"></i><i class="on"></i><i></i></span>mittel</span>
+      <span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i></span>stark</span>
+    </span>
+    <span>Tippe auf Begriffe, die dir vertraut sind · <b id="cnt">0</b> markiert</span>
+    <button id="reset" type="button">Zurücksetzen</button>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="cats"></div>
+
+  <section id="auswahl">
+    <h2>Deine Auswahl</h2>
+    <div id="sum" class="sum"></div>
+  </section>
+
+  <section class="hidden">
+    <h2>Schwer zu erkennen</h2>
+    <p class="sub">Hinter „Mir geht es nicht gut“ oder „Ich bin genervt“ steckt oft eines dieser Gefühle.</p>
+    <div class="grid" id="hid"></div>
+  </section>
+</main>
+<div class="trail" id="trail"></div>
+</div>
+
+<script>
+const CATS=[
+ ["Freude",95,["Zufriedenheit","Wohlbefinden","Heiterkeit","Erleichterung","Vergnügen","Behaglichkeit","Ausgeglichenheit"],["Freude","Begeisterung","Glücklichkeit","Fröhlichkeit","Dankbarkeit","Zuversicht","Hoffnung","Stolz","Verbundenheit"],["Euphorie","Ekstase","Überschwänglichkeit","Glückseligkeit","Verzückung","Jubel","Hochgefühl"]],
+ ["Traurigkeit",215,["Wehmut","Melancholie","Betrübtheit","Nachdenklichkeit","Bedrücktheit","Enttäuschung"],["Kummer","Niedergeschlagenheit","Einsamkeit","Verletztheit","Sehnsucht","Bedauern","Verlassenheit","Mutlosigkeit"],["Verzweiflung","Hoffnungslosigkeit","tiefer Schmerz","Trauer","Trostlosigkeit","innere Leere","Resignation","Ausweglosigkeit"]],
+ ["Wut & Ärger",8,["Gereiztheit","Genervtheit","Ungeduld","Unmut","Missfallen","Verstimmung"],["Frustration","Verärgerung","Groll","Verbitterung","Empörung","Kränkung","Trotz","Aufgebrachtheit"],["Zorn","Raserei","Entrüstung","Feindseligkeit","Hass","maßlose Empörung","Aggressivität"]],
+ ["Angst & Unsicherheit",275,["Zweifel","Unbehagen","Nervosität","Befangenheit","Skepsis","Zurückhaltung","Anspannung"],["Besorgnis","Beunruhigung","Verunsicherung","Beklommenheit","Furcht","Erwartungsangst","Misstrauen","Hilflosigkeit"],["Panik","Entsetzen","Schrecken","Todesangst","überwältigende Furcht","Ohnmacht","Alarmiertheit"]],
+ ["Scham, Schuld & Selbstzweifel",325,["Unsicherheit","Verlegenheit","Befangenheit","Unzulänglichkeit","Selbstkritik"],["Peinlichkeit","Beschämtheit","Schuldgefühl","Reue","Minderwertigkeitsgefühl","Selbstvorwürfe","Bloßstellung"],["Tiefe Scham","starke Schuldgefühle","Selbstverachtung","Wertlosigkeitsgefühl","Versagensgefühl","Selbstablehnung"]],
+ ["Stress & Überforderung",32,["Unruhe","Rastlosigkeit","Nervosität","Ungeduld","Getriebenheit","Konzentrationsschwierigkeiten"],["Überforderung","Druck","Erschöpfung","Überreiztheit","innere Unruhe","Angespanntheit","Zerrissenheit","Ratlosigkeit"],["Ausgelaugtheit","Überwältigung","völlige Erschöpfung","innere Blockade","Kontrollverlustgefühl","Zusammenbruchgefühl","emotionale Überlastung"]],
+ ["Ekel & Abneigung",75,["Unbehagen","Widerwillen","Abneigung","Befremden"],["Abscheu","Abgestoßensein","Antipathie"],["Ekel","tiefe Abscheu"]],
+ ["Überraschung & Verwirrung",185,["Verwunderung","Staunen","Irritation","Erstaunen"],["Verblüffung","Fassungslosigkeit","Ratlosigkeit","Verwirrung"],["Schock","Entsetzen","völlige Überrumpelung","Sprachlosigkeit"]],
+ ["Liebe, Nähe & Verbundenheit",345,["Sympathie","Zuneigung","Wohlwollen","Interesse"],["Vertrauen","Wertschätzung","Geborgenheit","Verbundenheit","Zärtlichkeit","Fürsorge"],["Liebe","tiefe Zuneigung","Hingabe","innige Verbundenheit","tiefe Dankbarkeit"]],
+ ["Sehnsucht, Neid & Bedürfnisse",165,["Wunsch","Interesse","Vermissen","Bewunderung"],["Sehnsucht","Neid","Eifersucht","Unzufriedenheit","Unrast","Verlangen"],["Missgunst","Verbitterung","starkes Vermissen","schmerzliches Verlangen","innere Zerrissenheit"]]
+];
+const HID=[["Hilflosigkeit","Ich weiß nicht, was ich tun soll."],["Ohnmacht","Ich kann die Situation nicht beeinflussen."],["Enttäuschung","Etwas ist anders gekommen, als ich gehofft hatte."],["Kränkung","Ich fühle mich persönlich verletzt."],["Zurückweisung","Ich habe das Gefühl, nicht gewollt zu sein."],["Einsamkeit","Mir fehlt echte Verbindung zu anderen."],["Zerrissenheit","Ich möchte zwei widersprüchliche Dinge gleichzeitig."],["Leere","Ich nehme gerade kaum etwas in mir wahr."],["Gleichgültigkeit","Es scheint mir nichts mehr wichtig zu sein."],["Überdruss","Ich habe von etwas innerlich genug."],["Resignation","Ich glaube nicht mehr daran, etwas verändern zu können."],["Misstrauen","Ich kann mich nicht sicher auf jemanden verlassen."],["Unzulänglichkeit","Ich habe das Gefühl, nicht zu genügen."],["Sehnsucht","Mir fehlt etwas oder jemand."],["Entfremdung","Ich fühle mich von mir oder anderen entfernt."],["Ambivalenz","Ich empfinde gleichzeitig widersprüchliche Gefühle."]];
+
+const MOODS=['happy','sad','angry','fear','shame','stress','disgust','surprise','love','longing'];
+function mouse(m,h,s){
+  const L='#4a4540',P='#f4a9b8',B='#6fb0e0',R='#e2646f';
+  const st=`fill="none" stroke="${L}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"`;
+  const path=d=>`<path d="${d}" ${st}/>`;
+  const dot=(x,hi)=>`<circle cx="${x}" cy="-3" r="2.1" fill="${L}"/>`+(hi?`<circle cx="${x+.7}" cy="-3.8" r=".7" fill="#fff"/>`:'');
+  const dots=hi=>dot(-7,hi)+dot(7,hi);
+  const big=[-7,7].map(x=>`<circle cx="${x}" cy="-3" r="3.8" fill="#fff" stroke="${L}" stroke-width="1.2"/><circle cx="${x}" cy="-3" r="1.6" fill="${L}"/>`).join('');
+  const bl=c=>`<circle cx="-13" cy="4" r="3" fill="${c}" opacity=".8"/><circle cx="13" cy="4" r="3" fill="${c}" opacity=".8"/>`;
+  const drop=`<path d="M19 -14 q-2.4 3.4 0 4.6 q2.4 -1.2 0 -4.6z" fill="${B}"/>`;
+  const heart=x=>`<path transform="translate(${x} -3)" d="M0 2.6 C-5.5 -1 -3.4 -5.2 0 -2.6 C3.4 -5.2 5.5 -1 0 2.6z" fill="${R}"/>`;
+  const smile=path('M-6 7 Q0 14 6 7');
+  const E={
+    happy:dots(1)+bl(P)+smile,
+    sad:dots(1)+path('M-5 10.5 Q0 6 5 10.5')+`<ellipse cx="-10.5" cy="2" rx="1.1" ry="2.2" fill="${B}"/>`,
+    angry:dots()+path('M-12 -9 L-3 -6 M12 -9 L3 -6')+path('M-4 10.5 Q0 8 4 10.5')+bl('#f08a8a'),
+    fear:big+path('M-5 9 q2.5 -3 5 0 t5 0')+drop,
+    shame:path('M-10 -2 Q-7 1 -4 -2 M4 -2 Q7 1 10 -2')+bl('#f08aa0')+path('M-3 9.5 q1.5 -1.5 3 0 t3 0'),
+    stress:path('M-11 -6 L-5 -3 L-11 0 M11 -6 L5 -3 L11 0')+path('M-6 10 L-3 7 L0 10 L3 7 L6 10')+drop,
+    disgust:path('M-11 -5 L-4 -2 M11 -5 L4 -2')+path('M-6 9 q2 -3 4 0 t4 0 t4 0')+bl('#b9d98a'),
+    surprise:big+`<circle cx="0" cy="10" r="2.6" fill="#fff" stroke="${L}" stroke-width="1.3"/>`+path('M-11 -9.5 Q-7 -13 -3 -9.5 M3 -9.5 Q7 -13 11 -9.5'),
+    love:heart(-7)+heart(7)+bl(P)+smile,
+    longing:dots(1)+path('M-4 8 Q0 11.5 4 8')+`<path transform="translate(21 -19)" d="M0 -5 Q.8 -.8 5 0 Q.8 .8 0 5 Q-.8 .8 -5 0 Q-.8 -.8 0 -5z" fill="#f2c23c"/>`
+  }[m];
+  const ears=[-1,1].map(x=>`<circle cx="${x*15}" cy="-15" r="10" fill="hsl(${h} 50% 80%)" stroke="${L}" stroke-width="1.4"/><circle cx="${x*15}" cy="-15" r="5.6" fill="${P}"/>`).join('');
+  const wh=[-1,1].map(x=>`<path d="M${x*10} 5 L${x*25} 2 M${x*10} 7.5 L${x*25} 9.5" fill="none" stroke="${L}" stroke-width=".9" stroke-linecap="round"/>`).join('');
+  return `<svg viewBox="-28 -28 56 56" width="${s}" height="${s}" aria-hidden="true">${ears}<circle r="20" fill="#f3eee6" stroke="${L}" stroke-width="1.4"/>${wh}<ellipse cx="0" cy="3.5" rx="2.3" ry="1.8" fill="${P}"/>${E}</svg>`;
+}
+const paw=h=>`<svg viewBox="-8 -8 16 16" width="22" height="22" aria-hidden="true"><g fill="hsl(${h} 50% 58%)"><ellipse cx="0" cy="3" rx="4.2" ry="3.4"/><circle cx="-5" cy="-2" r="1.9"/><circle cx="-1.8" cy="-5" r="1.9"/><circle cx="1.8" cy="-5" r="1.9"/><circle cx="5" cy="-2" r="1.9"/></g></svg>`;
+const cheese=w=>`<svg viewBox="0 0 32 20" width="${w}" aria-hidden="true"><path d="M2 18 L30 18 L30 6 L2 11z" fill="#f6cf55" stroke="#4a4540" stroke-width="1.4" stroke-linejoin="round"/><circle cx="10" cy="14" r="2" fill="#e0b13a"/><circle cx="21" cy="13" r="2.6" fill="#e0b13a"/><circle cx="26" cy="9.5" r="1.4" fill="#e0b13a"/></svg>`;
+document.getElementById('hero').innerHTML=mouse('happy',95,84)+cheese(40);
+document.getElementById('trail').innerHTML=Array.from({length:11},(_,i)=>`<span class="p" style="opacity:.6;transform:translateY(${i%2?5:-5}px)">${paw(CATS[i%10][1])}</span>`).join('')+cheese(40);
+
+let marked=new Set();
+try{marked=new Set(JSON.parse(localStorage.getItem('emo-marked-m')||'[]'))}catch(e){}
+const save=()=>{try{localStorage.setItem('emo-marked-m',JSON.stringify([...marked]))}catch(e){}};
+const cnt=document.getElementById('cnt');
+const upd=()=>{cnt.textContent=marked.size;renderSum()};
+
+function renderSum(){
+  const box=document.getElementById('sum');
+  if(!marked.size){
+    box.innerHTML='<p class="empty">'+mouse('longing',95,52)+'<br>Tippe oben auf Begriffe, die dir vertraut sind – hier erscheint dann deine Auswahl mit einer kurzen Auswertung.</p>';
+    return;
+  }
+  const per=CATS.map(()=>[]);
+  const lv=[0,0,0];
+  marked.forEach(k=>{
+    const p=k.split('-'),ci=+p[0],li=+p[1],w=p.slice(2).join('-');
+    if(per[ci]){per[ci].push([w,li]);lv[li]++}
+  });
+  const total=lv[0]+lv[1]+lv[2];
+  const rows=CATS.map((c,i)=>({i,name:c[0],h:c[1],w:per[i].sort((a,b)=>a[1]-b[1])})).filter(r=>r.w.length).sort((a,b)=>b.w.length-a.w.length);
+  const max=rows[0].w.length;
+
+  const left=rows.map(r=>`<div class="grp" style="--h:${r.h}"><div class="grp-h"><span>${r.name}</span><span class="b2"><i style="width:${Math.round(r.w.length/max*100)}%"></i></span><em>${r.w.length}</em></div><div class="chips">${r.w.map(x=>`<span class="chip ro">${x[0]}</span>`).join('')}</div></div>`).join('');
+
+  const top=rows.filter(r=>r.w.length===max).map(r=>'„'+r.name+'“');
+  const names=['leicht','mittel','stark'], adj=['leichte','mittlere','starke'];
+  const dom=lv.indexOf(Math.max(...lv));
+  let t=[];
+  t.push(`Du hast <b>${total}</b> ${total===1?'Begriff':'Begriffe'} aus <b>${rows.length}</b> ${rows.length===1?'Gefühlsfamilie':'Gefühlsfamilien'} markiert.`);
+  t.push(top.length===1?`Die meisten liegen bei ${top[0]} (${max} von ${total}).`:`Gleich viele liegen bei ${top.join(' und ')}.`);
+  t.push(lv[dom]>total/2?`Überwiegend ${adj[dom]} Intensität.`:'Die Intensität ist gemischt.');
+  if(rows.length>=4)t.push('Ein breites Spektrum – Gefühle dürfen gleichzeitig auftreten.');
+  else if(rows.length<=2&&total>=3)t.push('Vielleicht lohnt ein Blick in die anderen Familien: Was passt noch?');
+  if(lv[2]>=3&&lv[2]/total>=.4)t.push('Einige Begriffe liegen im starken Bereich – es kann entlasten, darüber zu sprechen.');
+
+  const cols=['hsl(210 25% 76%)','hsl(210 32% 56%)','hsl(210 42% 38%)'];
+  const seg=lv.map((n,i)=>n?`<i style="width:${n/total*100}%;background:${cols[i]}"></i>`:'').join('');
+  const segl=lv.map((n,i)=>`<span>${names[i]} · ${n}</span>`).join('');
+
+  box.innerHTML=`<div class="pane"><h3>Deine Wörter</h3>${left}</div><div class="pane"><h3>Kurz ausgewertet</h3><div class="mm">${mouse(MOODS[rows[0].i],rows[0].h,60)}</div><div class="seg">${seg}</div><div class="segl">${segl}</div><div class="txt">${t.map(s=>`<p>${s}</p>`).join('')}<p class="fine">Eine Orientierung, keine Diagnose.</p></div></div>`;
+}
+
+const root=document.getElementById('cats');
+CATS.forEach(([name,h,...lv],ci)=>{
+  const c=document.createElement('article');
+  c.className='card';c.style.setProperty('--h',h);
+  c.innerHTML=`<h3><span class="sw"></span>${name}<span class="mo">${mouse(MOODS[ci],h,40)}</span></h3>`;
+  lv.forEach((words,li)=>{
+    const row=document.createElement('div');row.className='lvl';
+    row.innerHTML=`<span class="dots" aria-label="${['leicht','mittel','stark'][li]}">${[0,1,2].map(i=>`<i class="${i<=li?'on':''}"></i>`).join('')}</span>`;
+    const ch=document.createElement('div');ch.className='chips';
+    words.forEach(w=>{
+      const key=ci+'-'+li+'-'+w;
+      const b=document.createElement('button');
+      b.type='button';b.className='chip'+(marked.has(key)?' mk':'');b.textContent=w;
+      b.setAttribute('aria-pressed',marked.has(key));
+      b.onclick=()=>{
+        marked.has(key)?marked.delete(key):marked.add(key);
+        b.classList.toggle('mk');b.setAttribute('aria-pressed',marked.has(key));
+        save();upd();
+      };
+      ch.appendChild(b);
+    });
+    row.appendChild(ch);c.appendChild(row);
+  });
+  root.appendChild(c);
+});
+document.getElementById('hid').innerHTML=HID.map(([a,b],i)=>`<div class="item" style="--h:${CATS[i%10][1]}">${paw(CATS[i%10][1])}<div><b>${a}</b><span>${b}</span></div></div>`).join('');
+document.getElementById('reset').onclick=()=>{
+  marked.clear();save();upd();
+  document.querySelectorAll('.chip.mk').forEach(e=>{e.classList.remove('mk');e.setAttribute('aria-pressed','false')});
+};
+upd();
+</script>
+</body>
+</html>
